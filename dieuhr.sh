@@ -6,7 +6,7 @@ do
 	TZ=$(find /usr/share/zoneinfo/ -maxdepth 1 -type f | xargs file | awk -v FS='[/:]' '/timezone data, version 2/ {print $5}' | shuf -n 1)
 	#printing time
 	clear;
-	figlet CWIX 2020;
+	figlet DIE UHR 2020;
 	figlet $(TZ=$TZ date +'%T');
 	##Exclude factory timezone
 	if [ $(TZ=$TZ date +'%Z') != "-00" ];
