@@ -24,3 +24,12 @@ Usage: ./dieuhr.sh [-z \<string\>] [-p \<string\>]
 ```
 
 will display hello and the current time as specified in the localtime timezone file
+
+
+```
+./dieuhr.sh -z Europe/Vienna -m WIEN
+
+./dieuhr.sh -z CET -m WIEN
+```
+
+will display WIEN and the Time in Vienna
