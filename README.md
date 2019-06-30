@@ -4,12 +4,12 @@ It cycles through the timezones.
 
 It doesn't update every second, but only when it is necesssary.
 
-# Usage
+## Usage
 
 Usage: ./dieuhr.sh [-z \<string\>] [-p \<string\>]
 
 
-# Options
+## Options
 
 	-z	define a timezone file path from /usr/share/zoneinfo/ to use.
 		Default is UTC
@@ -17,7 +17,7 @@ Usage: ./dieuhr.sh [-z \<string\>] [-p \<string\>]
 
 	-m	define a header message string as "<Content of String>"
 
-# Example
+## Example
 
 ```
 ./dieuhr.sh -z localtime -m hello
