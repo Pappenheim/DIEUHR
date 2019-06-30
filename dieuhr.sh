@@ -9,21 +9,22 @@ usage() {
 	echo "	see man date +%TZ for further Details";
 	echo "";
 	echo "-m	define a header message string as \"<Content of String>\"";
+	echo "Default is \"Die Uhr\""
 	exit 1;
 	}
 
-#predefining global variables for options
-z="";
-m="Die Uhr 2019";
+#predefining global variables to default for options
+Z="";
+M="Die Uhr";
 
 #reading in the options
 while getopts ":z:m:" o; do
     case "${o}" in
         z)
-            z=${OPTARG}
+            Z=${OPTARG}
             ;;
         m)
-            m=${OPTARG}
+            M=${OPTARG}
             ;;
         *)
             usage
@@ -35,17 +36,17 @@ done
 #Main loop for displaying the Time
 for i in {1..999}
 do
-	if [ -z "$z" ];
+	if [ -z "$Z" ];
 	then
 	#finding the zonefiles and picking a rnd one
 		TZ=$(find /usr/share/zoneinfo/ -maxdepth 1 -type f | xargs file | awk -v FS='[/:]' '/timezone data, version 2/ {print $5}' | shuf -n 1)
 	else
 		#using the z as zone
-		TZ=$z;
+		TZ=$Z;
 	fi
 	#printing time
 	clear;
-	figlet -c $m;
+	figlet -c $M;
 	figlet $(TZ=$TZ date +'%T');
 	##Exclude factory timezone
 	if [ $(TZ=$TZ date +'%Z') != "-00" ];
