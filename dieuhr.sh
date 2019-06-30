@@ -13,7 +13,7 @@ usage() {
 	}
 
 #predefining global variables for options
-z=None;
+z="";
 m="Die Uhr 2019";
 
 #reading in the options
@@ -40,8 +40,8 @@ do
 	#finding the zonefiles and picking a rnd one
 		TZ=$(find /usr/share/zoneinfo/ -maxdepth 1 -type f | xargs file | awk -v FS='[/:]' '/timezone data, version 2/ {print $5}' | shuf -n 1)
 	else
-	#using the z as zone
-	TZ=$z;
+		#using the z as zone
+		TZ=$z;
 	fi
 	#printing time
 	clear;
