@@ -3,7 +3,7 @@
 
 #This is my sad excuse for a man page
 usage() {
-	echo "Usage: $0 [-z <string>] [-p <string>]" 1>&2;
+	echo "Usage: $0 [-z <string>] [-m <string>]" 1>&2;
 	echo "-z	define a timezone file path from /usr/share/zoneinfo/ to use.";
 	echo "	Default is UTC"
 	echo "	see man date +'%Z' for further Details";
