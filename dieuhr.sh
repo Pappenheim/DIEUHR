@@ -14,17 +14,17 @@ usage() {
 	}
 
 #predefining global variables to default for options
-Z="";
-M="Die Uhr";
+HEADER="Die Uhr";
+SYSTEMTIMEZONES=$(find /usr/share/zoneinfo/ -maxdepth 1 -type f)
 
 #reading in the options
 while getopts ":z:m:" o; do
     case "${o}" in
         z)
-            Z=${OPTARG}
+            TIMEZONE=${OPTARG}
             ;;
         m)
-            M=${OPTARG}
+            HEADER=${OPTARG}
             ;;
         *)
             usage
@@ -32,31 +32,31 @@ while getopts ":z:m:" o; do
     esac
 done
 
+if [[ ! -z $TIMEZONE ]];
+then
+	if [[ "${SYSTEMTIMEZONES[*]}" == *"${TIMEZONE}"* ]];
+	then
+		FIXEDTZ=true
+	else
+		figlet "Timezone not found falling back to extreme RANDOMNESS"
+		sleep $(( $RANDOM % 7 +1));
+	fi
+fi
 
 #Main loop for displaying the Time
-for i in {1..999}
+while true
 do
-	if [ -z "$Z" ];
+	if [[ -z $FIXEDTZ ]];
 	then
-	#finding the zonefiles and picking a rnd one
-		TZ=$(find /usr/share/zoneinfo/ -maxdepth 1 -type f | xargs file | awk -v FS='[/:]' '/timezone data, version 2/ {print $5}' | shuf -n 1)
-	else
-		#using the z as zone
-		TZ=$Z;
+		#finding the zonefiles and picking a rnd one
+		TIMEZONE=$(echo ${SYSTEMTIMEZONES[@]} | xargs file | awk -v FS='[/:]' '/timezone data, version 2/ {print $5}' | shuf -n 1)
 	fi
 	#printing time
 	clear;
-	figlet -c $M;
-	figlet $(TZ=$TZ date +'%T');
-	##Exclude factory timezone
-	if [ $(TZ=$TZ date +'%Z') != "-00" ];
-	then
-		figlet $(TZ=$TZ date +'%Z');
-	else
-		figlet $TZ;
-	fi
-	#echo $TZ;
+	figlet -c $HEADER;
+	figlet $(TZ=$TIMEZONE date +'%T');
+	figlet $(TZ=$TIMEZONE date +'%Z');
+
 	#wait until it is necessary to update clock
-	#sleep $(random -e 6 ; echo $(($? + 1)) )
 	sleep $(( $RANDOM % 7 +1));
 done
